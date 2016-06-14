@@ -1,6 +1,9 @@
 // Main fiel
 var express = require( 'express' );
+var swig = require("swig");
 var app = express(); // creates an instance of an express application
+
+
 
 app.use(function(req, res, next){
   console.log("Request type: ", req.method);
