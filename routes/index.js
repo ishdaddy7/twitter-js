@@ -17,6 +17,12 @@ router.get('/users/:name', function(req, res) {
   res.render( 'index', { tweets: list, userName: name } );
 });
 
+router.get('/tweets/:id', function(req, res){
+  var thisID = +req.params.id;
+  var list = tweetBank.find({id: thisID});
+  res.render('index', {tweets: list, userName: list[0].name});
+});
+
 router.use(function(err, req, res, next){
   console.error(err);
 });
