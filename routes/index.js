@@ -1,27 +1,38 @@
 var express = require('express');
 var router = express.Router();
+var bodyParser = require('body-parser');
 // could use one line instead: var router = require('express').Router();
 var tweetBank = require('../tweetBank');
+var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 router.use(express.static('public'));
 
 router.get('/', function (req, res) {
   var tweets = tweetBank.list();
-  res.render( 'index', { tweets: tweets, userName: 'Suit Guy' } );
+  res.render( 'index', { tweets: tweets, userName: 'Suit Guy', showForm: true } );
+  //console.log(tweets);
+});
+
+router.post('/tweets', urlencodedParser, function(req, res){
+  if(!req.body) return res.sendStatus(400);
+  tweetBank.add(req.body.name, req.body.text);
+  res.redirect('/');
 });
 
 router.get('/users/:name', function(req, res) {
   var name = req.params.name;
   //console.log(name);
   var list = tweetBank.find( {name: name} );
-  res.render( 'index', { tweets: list, userName: name } );
+  res.render( 'profile', { tweets: list, userName: name, showForm: true  } );
 });
 
 router.get('/tweets/:id', function(req, res){
   var thisID = +req.params.id;
   var list = tweetBank.find({id: thisID});
-  res.render('index', {tweets: list, userName: list[0].name});
+  res.render('profile', {tweets: list, userName: list[0].name});
 });
+
+
 
 router.use(function(err, req, res, next){
   console.error(err);

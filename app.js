@@ -3,6 +3,8 @@ var express = require( 'express' );
 var swig = require("swig");
 var routes = require("./routes/");
 var app = express(); // creates an instance of an express application
+var socketio = require('socket.io');
+
 swig.setDefaults({ cache: false }); // added this for dev, since we'll be changing the file a lot. bad for production.
 
 app.engine('html', swig.renderFile);
@@ -22,4 +24,5 @@ app.use(function(err, req, res, next){
   console.error(err);
 });
 
-app.listen(3000);
+var server = app.listen(3000);
+var io = socketio.listen(server);
