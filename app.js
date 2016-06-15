@@ -4,6 +4,8 @@ var swig = require("swig");
 var routes = require("./routes/");
 var app = express(); // creates an instance of an express application
 var socketio = require('socket.io');
+var server = app.listen(3000);
+var io = socketio.listen(server);
 
 swig.setDefaults({ cache: false }); // added this for dev, since we'll be changing the file a lot. bad for production.
 
@@ -12,7 +14,7 @@ app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
 
 
-app.use('/', routes);
+app.use('/', routes(io));
 /*
 app.use(function(req, res, next){
   console.log("Request type: ", req.method);
@@ -24,5 +26,5 @@ app.use(function(err, req, res, next){
   console.error(err);
 });
 
-var server = app.listen(3000);
-var io = socketio.listen(server);
+
+

@@ -25,7 +25,7 @@
       <ul>
       <!-- display tweets here -->
       {% for tweet in tweets %}
-        <li class='tweetbox'>
+        <li class='tweetbox' id='tweet{{tweet.id}}'>
         <img>
         <div>
         <strong><a href="/users/{{tweet.name}}">{{tweet.name}} </a></strong><br/>

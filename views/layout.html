@@ -91,6 +91,63 @@
   // When 'new_tweet' events are fired, do something with the packaged tweet
   socket.on('new_tweet', function (tweet) {
     console.log(tweet);
+    var ul = document.getElementsByTagName('ul')[3];
+    var newTweetId = ul.childElementCount+1;
+    //make TWEET LINK
+    var tweetLink = document.createElement('a');
+    var tweetTextNode = document.createTextNode(tweet.text + " ");
+    tweetLink.appendChild(tweetTextNode);
+    var tweetTextHref = document.createAttribute('href');
+    tweetTextHref.value = '/tweets/' + newTweetId;
+    tweetLink.setAttributeNode(tweetTextHref);
+
+    //make USER LINK
+    var userLink = document.createElement('a');
+    var userTextNode = document.createTextNode(tweet.name);
+    userLink.appendChild(userTextNode);
+    var userTextHref = document.createAttribute('href');
+    userTextHref.value = '/users/' + tweet.name;
+    userLink.setAttributeNode(userTextHref);
+
+    //MAKE RETWEET LINK
+    var retweetLink = document.createElement('a');
+    var retweetTextNode = document.createTextNode('Retweet');
+    retweetLink.appendChild(retweetTextNode);
+    var retweetTextHref = document.createAttribute('href');
+    retweetTextHref.value = '#';
+    retweetLink.setAttributeNode(retweetTextHref);
+
+    //MAKE STRONG
+    var strong = document.createElement('strong');
+
+    //MAKE DIV
+    var div = document.createElement('div');
+
+    //MAKE IMG
+    var image = document.createElement('img');
+
+    //MAKE BR
+    var br = document.createElement('br');
+    //MAKE LI
+    var li = document.createElement('li');
+    var liClass = document.createAttribute('class');
+    liClass.value = 'tweetbox';
+    var liID = document.createAttribute('id');
+    liID.value = 'tweet' + newTweetId;
+    li.setAttributeNode(liClass);
+    li.setAttributeNode(liID);
+
+    //CREATE ELEMENT
+    //div.appendChild()
+    strong.appendChild(userLink)
+    div.appendChild(strong);
+    div.appendChild(br);
+    div.appendChild(tweetLink)
+    div.appendChild(retweetLink)
+    li.appendChild(image);
+    li.appendChild(div);
+    ul.appendChild(li);
+    console.log(ul, tweetLink, userLink, retweetLink, image, li, image, div);
     alert('Refreshing... check the console...');
     // some logic to add the new tweet to the DOM…
   });
